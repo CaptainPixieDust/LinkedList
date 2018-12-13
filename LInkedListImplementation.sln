@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LInkedListImplementation", "LInkedListImplementation\LInkedListImplementation.csproj", "{A42E75C9-C43F-4C37-A2CD-A2DFDD51995E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A42E75C9-C43F-4C37-A2CD-A2DFDD51995E}.Debug|x86.ActiveCfg = Debug|x86
+		{A42E75C9-C43F-4C37-A2CD-A2DFDD51995E}.Debug|x86.Build.0 = Debug|x86
+		{A42E75C9-C43F-4C37-A2CD-A2DFDD51995E}.Release|x86.ActiveCfg = Release|x86
+		{A42E75C9-C43F-4C37-A2CD-A2DFDD51995E}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
