@@ -1,49 +1,115 @@
 ﻿using System;
+using System.Collections;
 namespace LInkedListImplementation
 {
-    public class LinkedList
+    public class LinkedList<T> : IEnumerable
     {
-        private Node head;
-        private Node tail;
+        public class Node
+        {
+            public Node previous { get; set; }
+            public Node next { get; set; }
+            public T data { get; set; }
 
-        public void AddFirst(object data){
-            Node newNode = new Node(data);
-            newNode.next = head;
-            newNode.previous = null;
-            if(head != null){
-                head.previous = newNode;
+            public Node() { }
+            public Node(T d)
+            {
+                data = d;
             }
-            head = newNode;
+        }
+        private Node Head;
+        private Node Tail;
+        public int Count { get; private set; }
+
+        public LinkedList()
+        {
+            Head = null;
+            Tail = null;
+            Count = 0;
         }
 
-        public void AddLast(object data){
+        public void AddFirst(T data){
+            Node newNode = new Node(data);
+            newNode.next = Head;
+            newNode.previous = null;
+            if(Head != null){
+                Head.previous = newNode;
+            }
+            else
+            {
+                Tail = newNode;
+            }
+            Head = newNode;
+            Count++;
+        }
+
+        public void AddLast(T data){
             Node node = new Node(data);
             node.next = null;
-            if(tail == null){
-                head = node;
-                tail = node;
+            if(Tail == null){
+                Head = node;
+                Tail = node;
                 node.previous = null;
             }
             else{
-                tail.next = node;
-                node.previous = tail;
-                tail = node;
+                Tail.next = node;
+                node.previous = Tail;
+                Tail = node;
             }
+            Count++;
         }
 
         public void RemoveLast(){
             //if(head == null) //error
-            if(head == tail){
-                head = null;
-                tail = null;
+            if(Head == Tail){
+                Head = null;
+                Tail = null;
             }
             else{
-                tail = tail.previous;
-                tail.next = null;
+                Tail = Tail.previous;
+                Tail.next = null;
             }
+            Count--;
         }
 
-        public void AddAfter(Node node, object data){
+        public void RemoveFirst()
+        {
+            if(Head == Tail)
+            {
+                Head = null;
+                Tail = null;
+            }
+            else
+            {
+                Head = Head.next;
+                Head.previous = null;
+            }
+            Count--;
+        }
+
+        public void Remove(T data)
+        {
+            Node before = null;
+            Node current = Head;
+
+            while(!Equals(current.data, data))
+            {
+                before.next = current;
+                current = current.next;
+            }
+            if(current == Head)
+            {
+                Head = Head.next;
+                Head.previous = null;
+            }
+            else
+            {
+                before.next = current.next;
+                current.next.previous = before;
+            }
+            Count--;
+        }
+
+        public void AddAfter(Node node, T data){
             Node newNode = new Node(data);
             newNode.next = node.next;
             newNode.previous = node;
@@ -51,12 +117,13 @@ namespace LInkedListImplementation
             if(newNode.next != null){
                 newNode.next.previous = newNode;
             }
-            if(tail == node){
-                tail = newNode;
+            if(Tail == node){
+                Tail = newNode;
             }
+            Count++;
         }
 
-        public void AddBefore(Node node, object data){
+        public void AddBefore(Node node, T data){
             Node newNode = new Node(data);
             newNode.next = node;
             newNode.previous = node.previous;
@@ -64,8 +131,52 @@ namespace LInkedListImplementation
             if(newNode.previous != null){
                 newNode.previous.next = newNode;
             }
-            if(head == node){
-                head = newNode;
+            if(Head == node){
+                Head = newNode;
+            }
+            Count++;
+        }
+
+        public void Clear()
+        {
+            Head = null;
+            Tail = null;
+            Count = 0;
+        }
+
+        public bool Contains(T data)
+        {
+            Node node = Head;
+            while(!Equals(node.data, data) && node.next != null)
+            {
+                node = node.next;
+            }
+            if(!Equals(node.data, data))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public Node Find(T data)
+        {
+            Node node = Head;
+            while(!Equals(node.data, data))
+            {
+                node = node.next;
+            }
+
+            return node;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            var node = Head;
+            while (node != null)
+            {
+                yield return node.data;
+                node = node.next;
             }
         }
     }
